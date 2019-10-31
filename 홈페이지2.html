@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	<title>
+		졸업작품 소개
+	</title>
+	<meta name="이형섭 졸업작품" content="이형섭 졸업작품">
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<style>
+		.nav {
+		height: 70px;
+		border-bottom: 3px solid black;
+		display: flex;
+		align-items: center;
+		}
+		.name {
+			margin-left: 20px;
+			font-weight:bold;
+		}
+		.footer {
+			height: 70px;
+			border-bottom: 3px solid black;
+			display: flex;
+			align-items: center;
+		}
+
+		.footer-right-items {
+			display: flex;
+			margin-left: auto;
+		}		
+	</style>
+
+	
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
+	<script language="JavaScript">
+
+			var TRange=null;
+			
+			function findString (str) {
+			 if (parseInt(navigator.appVersion)<4) return;
+			 var strFound;
+			 if (navigator.appName=="Netscape") {
+			
+			  // NAVIGATOR-SPECIFIC CODE
+			
+			  strFound=self.find(str);
+			  if (!strFound) {
+			  strFound=self.find(str,0,1);
+			  while (self.find(str,0,1)) continue;
+			  }
+			 }
+			 if (navigator.appName.indexOf("Microsoft")!=-1) {
+			
+			  // EXPLORER-SPECIFIC CODE
+			
+			  if (TRange!=null) {
+			  TRange.collapse(false);
+			  strFound=TRange.findText(str);
+			  if (strFound) TRange.select();
+			  }
+			  if (TRange==null || strFound==0) {
+			  TRange=self.document.body.createTextRange();
+			  strFound=TRange.findText(str);
+			  if (strFound) TRange.select();
+			  }
+			 }
+			 if (!strFound) alert ("String '"+str+"' not found!");
+			}
+			//-->
+	</script>
+	<script>
+
+	$(document).ready(function() {
+	  $('#target').click(function() {
+	    $.getJSON('ex2.json', function(data) {
+	      var html = '';
+	      $.each(data, function(entryIndex, entry) {
+	    	  html += '<div class="entry">';
+	    	  html += '<h3 class="작품제목">' + entry. 작품제목+ '</h3>';
+	    	  html += '<div class="학번">' + entry.학번 + '</div>';
+			  html += '<div class="이름">' + entry.이름 + '</div>';
+			  html += '<div class="개발도구">' + entry.개발도구 + '</div>';
+			  html += '<div class="작품소개">' + entry.작품소개 + '</div>';
+			  html += '<div class="작품내용">' + entry.작품내용 + '</div>';
+			  html += '<div class="작품이미지">' + entry.작품이미지 + '</div>';
+			  html += '<div class="발표년도">' + entry.발표년도 + '</div>';
+	    	  html += '<div class="비고">';
+	    	  html += entry.비고;
+				
+ 
+
+	      });
+	      console.log(html);
+	      $('#dictionary').html(html);
+	    });
+	    return false;
+	  });
+
+	});
+	</script>
+
+  </head>
+  <body>
+	<div class="nav">
+		<div class="name">
+				순천대학교 컴퓨터교육과 졸업작품
+		</div>
+	</div>
+	<form name="f1" action="" onSubmit="if(this.t1.value!=null && this.t1.value!='') findString(this.t1.value);return false">
+		<br>	
+		<input type="text"name=t1 value="입력하시오.">
+			<input type="submit" name=b1 value="찾기">
+		</form>
+
+
+    <div id="container">
+			<div class="letters">
+			  <div class="letter" id="target">
+				  <br>
+				<h3><a href="#">졸업작품 리스트<br></a></h3>
+				</div>
+			   </div>
+		<div id="dictionary">
+			</div>
+
+	</div>
+
+	<div class="footer">
+		<div class="footer-right-items">
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp20125107<br>
+		컴퓨터교육과 이형섭
+		</div>
+	</div>	
+
+  </body>
+
+</html>
+
+
