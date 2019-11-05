@@ -71,14 +71,21 @@
 			
 		function findString (str) {//함수선언
 			
-		if (search!=null) {
+		if (navigator.appName.indexOf("Microsoft")!=-1) {
 
-			findstr=search.findText(str);//findtext객채의 안에있는 글자들을 검색할 수 있는 메소드(행동)
-			if (findstr) search.select();//select 특정문자가 포함된 조건 검색
-			}
+			if (search!=null) {
 
+				findstr=search.findText(str);//findtext객채의 안에있는 글자들을 검색할 수 있는 메소드(행동)
+				if (findstr) search.select();//select 특정문자가 포함된 조건 검색
+				}
 
+				if (search==null || findstr==0) {
+				search=self.document.body.createTextRange();//텍스트범위,지정된 객체내 텍스트 범위 
+				findstr=search.findText(str);
+				if (findstr) search.select();
+				}
 
+		}
 			if (!findstr) alert ("String '"+str+"' not found!");
 	}
 				
