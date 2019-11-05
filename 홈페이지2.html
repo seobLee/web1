@@ -35,73 +35,61 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	
-	<script language="JavaScript">
-
-			var TRange=null;
-			
-			function findString (str) {
-			 if (parseInt(navigator.appVersion)<4) return;
-			 var strFound;
-			 if (navigator.appName=="Netscape") {
-			
-	
-			
-			  strFound=self.find(str);
-			  if (!strFound) {
-			  strFound=self.find(str,0,1);
-			  while (self.find(str,0,1)) continue;
-			  }
-			 }
-			 if (navigator.appName.indexOf("Microsoft")!=-1) {
-			
-		
-			
-			  if (TRange!=null) {
-			  TRange.collapse(false);
-			  strFound=TRange.findText(str);
-			  if (strFound) TRange.select();
-			  }
-			  if (TRange==null || strFound==0) {
-			  TRange=self.document.body.createTextRange();
-			  strFound=TRange.findText(str);
-			  if (strFound) TRange.select();
-			  }
-			 }
-			 if (!strFound) alert ("String '"+str+"' not found!");
-			}
-	
-	</script>
 	<script>
 
-	$(document).ready(function() {
+	$(function() {//다음 이벤트 동작준비
 	  $('#target').click(function() {
-	    $.getJSON('ex2.json', function(data) {
-	      var html = '';
-	      $.each(data, function(entryIndex, entry) {
-	    	  html += '<div class="entry">';
-	    	  html += '<h3 class="작품제목">' + entry. 작품제목+ '</h3>';
-	    	  html += '<div class="학번">' + entry.학번 + '</div>';
-			  html += '<div class="이름">' + entry.이름 + '</div>';
-			  html += '<div class="개발도구">' + entry.개발도구 + '</div>';
-			  html += '<div class="작품소개">' + entry.작품소개 + '</div>';
-			  html += '<div class="작품내용">' + entry.작품내용 + '</div>';
-			  html += '<div class="작품이미지">' + entry.작품이미지 + '</div>';
-			  html += '<div class="발표년도">' + entry.발표년도 + '</div>';
-	    	  html += '<div class="비고">';
-	    	  html += entry.비고;
-				
- 
+	    $.getJSON('lastwork.json', function(data) {
+	      
+        var html='' ;//문자열
+            //data로 json파일 로드 콜백함수에서 로드된 데이터 처리 
+	      $.each(data, function(k, v) {//each는 for문 같은거 j쿼리전용,, jQuery.each (배열, 콜백) jQuery.each (객체, 콜백)
+           //k로 data전달 k v는 data의 인덱스와 값
+	    	  html += '<div class="v">';//data()는 json형식으로 데이터저장
+	    	  html += '<h3 class="작품제목">' + v.작품제목+ '</h3>';
+	    	  html += '<div class="학번">' + v.학번 + '</div>';
+			  html += '<div class="이름">' + v.이름 + '</div>';
+			  html += '<div class="개발도구">' + v.개발도구 + '</div>';
+			  html += '<div class="작품소개">' + v.작품소개 + '</div>';
+			  html += '<div class="작품내용">' + v.작품내용 + '</div>';
+			  html += '<div class="작품이미지">' + v.작품이미지 + '</div>';
+			  html += '<div class="발표년도">' + v.발표년도 + '</div>';
+	    	  html += '<div class="비고">';+ v.비고;				
 
 	      });
-	      console.log(html);
-	      $('#dictionary').html(html);
+
+	      console.log(html);//console printf 같은거 
+	      $('#dictionary').html(html);//dictionary 형태로출력
 	    });
-	    return false;
+
 	  });
 
 	});
-	</script>
+ 
 
+		var search=null;//null값
+			
+		function findString (str) {//함수선언
+			
+		if (navigator.appName.indexOf("Microsoft")!=-1) {
+
+			if (search!=null) {
+
+				findstr=search.findText(str);//findtext객채의 안에있는 글자들을 검색할 수 있는 메소드(행동)
+				if (findstr) search.select();//select 특정문자가 포함된 조건 검색
+				}
+
+				if (search==null || findstr==0) {
+				search=self.document.body.createTextRange();//텍스트범위,지정된 객체내 텍스트 범위 
+				findstr=search.findText(str);
+				if (findstr) search.select();
+				}
+
+		}
+			if (!findstr) alert ("String '"+str+"' not found!");
+	}
+				
+    </script>
   </head>
   <body>
 	<div class="nav">
@@ -109,7 +97,9 @@
 				순천대학교 컴퓨터교육과 졸업작품
 		</div>
 	</div>
-	<form name="f1" action="" onSubmit="if(this.t1.value!=null && this.t1.value!='') findString(this.t1.value);return false">
+
+	<form name="f1" action="" onSubmit="if(this.t1.value!=null && this.t1.value!='') 
+		findString(this.t1.value);return false">
 		<br>	
 		<input type="text"name=t1 value="입력하시오.">
 			<input type="submit" name=b1 value="찾기">
