@@ -41,7 +41,7 @@
 	  $('#target').click(function() {
 	    $.getJSON('lastwork.json', function(data) {
 	      
-        var html='' ;
+        var html='' ;//문자열
             //data로 json파일 로드 콜백함수에서 로드된 데이터 처리 
 	      $.each(data, function(k, v) {//each는 for문 같은거 j쿼리전용,, jQuery.each (배열, 콜백) jQuery.each (객체, 콜백)
            //k로 data전달 k v는 data의 인덱스와 값
@@ -54,56 +54,34 @@
 			  html += '<div class="작품내용">' + v.작품내용 + '</div>';
 			  html += '<div class="작품이미지">' + v.작품이미지 + '</div>';
 			  html += '<div class="발표년도">' + v.발표년도 + '</div>';
-	    	  html += '<div class="비고">';
-	    	  html += v.비고;				
+	    	  html += '<div class="비고">';+ v.비고;				
 
 	      });
 
 	      console.log(html);//console printf 같은거 
-	      $('#dictionary').html(html);//dictionary 형태로삽입
+	      $('#dictionary').html(html);//dictionary 형태로출력
 	    });
 
 	  });
 
 	});
-    </script>
-    
-	<script language="JavaScript">
+ 
 
-			var TRange=null;
+		var search=null;//null값
 			
-			function findString (str) {
-			 if (parseInt(navigator.appVersion)<4) return;
-			 var strFound;
-			 if (navigator.appName=="Netscape") {
+		function findString (str) {//함수선언
 			
-			  // NAVIGATOR-SPECIFIC CODE
-			
-			  strFound=self.find(str);
-			  if (!strFound) {
-			  strFound=self.find(str,0,1);
-			  while (self.find(str,0,1)) continue;
-			  }
-			 }
-			 if (navigator.appName.indexOf("Microsoft")!=-1) {
-			
-			  // EXPLORER-SPECIFIC CODE
-			
-			  if (TRange!=null) {
-			  TRange.collapse(false);
-			  strFound=TRange.findText(str);
-			  if (strFound) TRange.select();
-			  }
-			  if (TRange==null || strFound==0) {
-			  TRange=self.document.body.createTextRange();
-			  strFound=TRange.findText(str);
-			  if (strFound) TRange.select();
-			  }
-			 }
-			 if (!strFound) alert ("String '"+str+"' not found!");
+		if (search!=null) {
+
+			findstr=search.findText(str);//findtext객채의 안에있는 글자들을 검색할 수 있는 메소드(행동)
+			if (findstr) search.select();//select 특정문자가 포함된 조건 검색
 			}
-			//-->
-	
+
+
+
+			if (!findstr) alert ("String '"+str+"' not found!");
+	}
+				
     </script>
   </head>
   <body>
@@ -112,7 +90,9 @@
 				순천대학교 컴퓨터교육과 졸업작품
 		</div>
 	</div>
-	<form name="f1" action="" onSubmit="if(this.t1.value!=null && this.t1.value!='') findString(this.t1.value);return false">
+
+	<form name="f1" action="" onSubmit="if(this.t1.value!=null && this.t1.value!='') 
+		findString(this.t1.value);return false">
 		<br>	
 		<input type="text"name=t1 value="입력하시오.">
 			<input type="submit" name=b1 value="찾기">
